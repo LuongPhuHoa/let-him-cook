@@ -4,8 +4,15 @@
 .text {
 	margin-top: 1rem;
 }
+// .meals__container {
+// 	margin-top: 5rem;
+// 	display: grid;
+// 	gap: 1rem;
+// 	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+// }
+
 .meals__container {
-	margin-top: 5rem;
+	margin-top: 0;
 	display: grid;
 	gap: 1rem;
 	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -20,7 +27,7 @@
 // single meals styles
 
 .pageWrapper {
-	padding: 10rem 0;
+	padding: 0rem 0;
 }
 .topContainer {
 	display: flex;
@@ -30,7 +37,7 @@
 }
 
 .info {
-	padding-top: 2rem;
+	padding-top: 10rem;
 }
 
 .infoText {
@@ -46,7 +53,7 @@
 
 .ingredientsTable,
 .instructions {
-	margin-top: 10rem;
+	margin-top: 2rem;
 }
 
 .greenText {
