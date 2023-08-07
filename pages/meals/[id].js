@@ -55,20 +55,7 @@ function SingleMeals() {
     measure: data[`strMeasure${index + 1}`],
   }));
 
-  const handleSaveButtonClick = async () => {
-    const savedMeals = JSON.parse(localStorage.getItem('savedMeals'));
-    if (!isSaved) {
-      savedMeals.push(data.idMeal);
-      localStorage.setItem('savedMeals', JSON.stringify(savedMeals));
-      toast.success('Meal saved successfully');
-      setIsSaved(true);
-    } else {
-      savedMeals.splice(savedMeals.indexOf(data.idMeal), 1);
-      localStorage.setItem('savedMeals', JSON.stringify(savedMeals));
-      setIsSaved(false);
-      toast.error('Meal Removed successfully');
-    }
-  };
+  
 
   return (
     <div className={classes.pageWrapper}>
@@ -93,25 +80,6 @@ function SingleMeals() {
             {' '}
             {data?.strTags?.split(',').join(', ')}
           </PointText>
-
-          {isSaved && (
-            <Text className={classes.greenText}>You already saved the meal.</Text>
-          )}
-          <Button variant="primary" className={classes.saveButton} onClickHandler={handleSaveButtonClick}>
-            {isSaved ? (
-              <>
-                <FaHeartBroken />
-                {' '}
-                Remove
-              </>
-            ) : (
-              <>
-                <FaHeart className={classes.saveIcon} />
-                { ' '}
-                save
-              </>
-            ) }
-          </Button>
         </div>
       </div>
       <div className={classes.ingredientsTable}>
