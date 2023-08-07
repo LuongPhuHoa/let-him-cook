@@ -1,27 +1,30 @@
-import React, { useEffect } from 'react';
-import { useRouter } from 'next/router';
+import {useQuery} from '@tanstack/react-query';
 import axios from 'axios';
-import { useQuery } from '@tanstack/react-query';
-import { BeatLoader } from 'react-spinners';
 import Image from 'next/image';
-import { FaHeartBroken, FaHeart } from 'react-icons/fa';
+import {useRouter} from 'next/router';
+import React, {useEffect} from 'react';
 import toast from 'react-hot-toast';
-import classes from './meals.module.scss';
-import Title from '../../components/text/Title';
-import PointText from '../../components/text/PointText';
-import IngredientsTable from '../../components/mealsPage/IngredientsTable';
-import { Button } from '../../components/button/Button';
-import Text from '../../components/text/Text';
+import {FaHeart, FaHeartBroken} from 'react-icons/fa';
+import {BeatLoader} from 'react-spinners';
 
-export const getSingleMeal = async ({ queryKey }) => {
-  const { data } = await axios.get(`/lookup.php?i=${queryKey[1]}`);
+import {Button} from '../../components/button/Button';
+import IngredientsTable from '../../components/mealsPage/IngredientsTable';
+import PointText from '../../components/text/PointText';
+import Text from '../../components/text/Text';
+import Title from '../../components/text/Title';
+
+import classes from './meals.module.scss';
+
+export const getSingleMeal = async ({queryKey}) => {
+  const {data} = await axios.get(`/lookup.php?i=${queryKey[1]}`);
   return data?.meals?.[0];
 };
 
 function SingleMeals() {
   const router = useRouter();
-  const { id } = router.query;
-  const { data, isLoading, isError } = useQuery(['singleMeal', id], getSingleMeal);
+  const {id} = router.query;
+  const {data, isLoading, isError} =
+      useQuery([ 'singleMeal', id ], getSingleMeal);
   const [isSaved, setIsSaved] = React.useState(false);
 
   useEffect(() => {
@@ -35,7 +38,7 @@ function SingleMeals() {
     } else {
       localStorage.setItem('savedMeals', JSON.stringify([]));
     }
-  }, [id]);
+  }, [ id ]);
 
   if (isError) {
     return <div>Error</div>;
@@ -47,13 +50,17 @@ function SingleMeals() {
     );
   }
 
-  const ingredients = Object.keys(data).filter((key) => key.startsWith('strIngredient')).filter((key) => data[key] !== '' && data[key] !== null);
+  const ingredients =
+      Object.keys(data)
+          .filter((key) => key.startsWith('strIngredient'))
+          .filter((key) => data[key] !== '' && data[key] !== null);
 
-  const ingredientsWithMeasures = ingredients.map((key, index) => ({
-    index: index + 1,
-    ingredient: data[key],
-    measure: data[`strMeasure${index + 1}`],
-  }));
+  const ingredientsWithMeasures =
+      ingredients.map((key, index) => ({
+                        index : index + 1,
+                        ingredient : data[key],
+                        measure : data[`strMeasure${index + 1}`],
+                      }));
 
   const handleSaveButtonClick = async () => {
     const savedMeals = JSON.parse(localStorage.getItem('savedMeals'));
@@ -74,7 +81,8 @@ function SingleMeals() {
     <div className={classes.pageWrapper}>
       <div className={classes.topContainer}>
         <div className={classes.img}>
-          <Image src={data.strMealThumb} height={600} width={800} alt={data.strMeal} />
+          <Image src={data.strMealThumb} height={600} width={800} alt={
+    data.strMeal} />
         </div>
         <div className={classes.info}>
           <Title variant="primary">{data.strMeal}</Title>
@@ -115,7 +123,8 @@ function SingleMeals() {
         </div>
       </div>
       <div className={classes.ingredientsTable}>
-        <IngredientsTable ingredientsWithMeasures={ingredientsWithMeasures} />
+        <IngredientsTable ingredientsWithMeasures={
+    ingredientsWithMeasures} />
       </div>
       <div className={classes.instructions}>
         <Title>Instructions</Title>
